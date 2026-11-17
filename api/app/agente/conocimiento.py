@@ -99,8 +99,8 @@ TEMAS: list[dict] = [
     },
     {
         "id": "soporte",
-        "claves": {"soporte", "falla", "error", "problema", "ayuda", "mantenimiento", "garantia",
-                   "support", "bug", "issue", "maintenance", "warranty"},
+        "claves": {"soporte", "falla", "error", "problema", "ayuda", "mantenimiento", "mantener", "mantienen", "actualizar", "garantia",
+                   "support", "bug", "issue", "maintenance", "maintain", "warranty"},
         "es": ("Todos nuestros proyectos incluyen un periodo de garantía y planes de mantenimiento. Si ya "
                "eres cliente, usa el formulario de Contacto con el asunto «Soporte» o pide aquí hablar con "
                "una persona."),
