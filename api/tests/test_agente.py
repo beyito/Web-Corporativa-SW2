@@ -52,3 +52,13 @@ def test_el_modelo_recibe_solo_la_base_y_el_historial(monkeypatch):
     mensajes = enviado["cuerpo"]["messages"]
     assert enviado["url"].endswith("/api/chat") and mensajes[0]["role"] == "system"
     assert "Kallpa Software" in mensajes[0]["content"] and [m["role"] for m in mensajes[1:]] == ["user", "assistant", "user"]
+
+
+def test_contexto_recortado_a_los_temas_relevantes():
+    from app.agente.conocimiento import TEMAS, contexto_para_modelo
+    ctx = contexto_para_modelo("es", "¿Trabajan con Flutter y dónde están?")
+    lineas = ctx.splitlines()
+    assert len(lineas) == 5 < len(TEMAS)
+    assert "Flutter" in lineas[0] or "Flutter" in lineas[1]  # tecnologías primero
+    assert any("Santa Cruz" in x for x in lineas[:2])         # ubicación también
+    assert len(contexto_para_modelo("en", "hello?").splitlines()) == 5  # sin coincidencias: los básicos

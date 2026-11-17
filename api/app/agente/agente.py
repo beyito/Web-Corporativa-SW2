@@ -48,29 +48,28 @@ def es_solo_saludo(texto: str) -> bool:
     return bool(palabras) and palabras <= (SALUDOS | {"que", "tal", "dias", "tardes", "noches", "there"})
 
 
-def _instrucciones(idioma: str) -> str:
+def _instrucciones(idioma: str, texto: str) -> str:
     lengua = "español" if idioma == "es" else "English"
     return (
-        f"Eres el asistente virtual de Kallpa Software, una empresa de desarrollo de software. Responde en {lengua}, "
-        "en 1 a 3 oraciones, con tono cordial. Usa SOLO los datos de la lista; no inventes precios, nombres, "
-        "teléfonos, clientes ni fechas. Si la pregunta no se responde con la lista o no trata sobre la empresa, "
-        "di que no tienes esa información y ofrece hablar con una persona del equipo o usar el formulario de "
-        f"Contacto.\n\nDatos de la empresa:\n{contexto_para_modelo(idioma)}"
+        f"Eres el asistente de Kallpa Software (desarrollo de software). Responde en {lengua}, en 1 a 3 oraciones, "
+        "cordial. Usa SOLO estos datos; no inventes precios, nombres, teléfonos, clientes ni fechas. Si no está en "
+        "los datos o no trata de la empresa, dilo y ofrece hablar con una persona o usar el formulario de Contacto."
+        f"\n\nDatos:\n{contexto_para_modelo(idioma, texto)}"
     )
 
 
 def preguntar_al_modelo(texto: str, historial: list[tuple[str, str]], idioma: str) -> str | None:
     if not settings.ollama_url:
         return None
-    mensajes = [{"role": "system", "content": _instrucciones(idioma)}]
-    for autor, contenido in historial[-6:]:
+    mensajes = [{"role": "system", "content": _instrucciones(idioma, texto)}]
+    for autor, contenido in historial[-4:]:
         mensajes.append({"role": "user" if autor == "VISITANTE" else "assistant", "content": contenido})
     mensajes.append({"role": "user", "content": texto})
     try:
         r = httpx.post(
             f"{settings.ollama_url.rstrip('/')}/api/chat",
-            json={"model": settings.ollama_model, "messages": mensajes, "stream": False,
-                  "options": {"temperature": 0.2, "num_predict": 160}},
+            json={"model": settings.ollama_model, "messages": mensajes, "stream": False, "keep_alive": "60m",
+                  "options": {"temperature": 0.2, "num_predict": 120}},
             timeout=settings.ollama_timeout,
         )
         r.raise_for_status()

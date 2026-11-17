@@ -162,6 +162,20 @@ def normalizar(texto: str) -> set[str]:
     return set(re.findall(r"[a-z0-9]+", sin_tildes))
 
 
-def contexto_para_modelo(idioma: str) -> str:
-    """Todo el conocimiento en un texto, para el mensaje de sistema del modelo."""
-    return "\n".join(f"- {t[idioma]}" for t in TEMAS)
+BASICOS = ("empresa", "servicios", "precios", "plazos", "contacto")
+
+
+def contexto_para_modelo(idioma: str, texto: str = "", maximo: int = 5) -> str:
+    """Los temas más relevantes para la pregunta (en CPU, cada token de contexto cuesta tiempo).
+
+    Primero los que comparten palabras con la pregunta; se completa con los básicos de la empresa.
+    """
+    palabras = normalizar(texto)
+    por_coincidencia = sorted((t for t in TEMAS if palabras & t["claves"]),
+                              key=lambda t: -len(palabras & t["claves"]))
+    elegidos = [t["id"] for t in por_coincidencia]
+    for b in BASICOS:
+        if b not in elegidos:
+            elegidos.append(b)
+    por_id = {t["id"]: t for t in TEMAS}
+    return "\n".join(f"- {por_id[i][idioma]}" for i in elegidos[:maximo])
