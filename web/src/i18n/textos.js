@@ -66,8 +66,21 @@ export const textos = {
       ubicacion: 'Ubicación', ubicacionTexto: 'Santa Cruz de la Sierra, Bolivia', horario: 'Horario', horarioTexto: 'Lunes a viernes, 8:30 a 18:30 (hora de Bolivia)',
       minimo: 'Escribe al menos 10 caracteres.',
     },
-    boletin: { titulo: 'Recibe nuestras actualizaciones', texto: 'Te avisamos por correo de cada nueva versión y noticia. Sin spam.', placeholder: 'tu@correo.com', boton: 'Suscribirme', exito: 'Listo: revisa tu correo para confirmar.', error: 'No se pudo suscribir. Revisa el correo.' },
+    boletin: { titulo: 'Recibe nuestras actualizaciones', texto: 'Te avisamos por correo de cada nueva versión y noticia. Sin spam.', placeholder: 'tu@correo.com', boton: 'Suscribirme', exito: 'Listo: revisa tu correo para confirmar.', error: 'No se pudo suscribir. Revisa el correo.', acepto: 'Al suscribirte aceptas los', terminos: 'términos y condiciones', y: 'y la', privacidad: 'política de privacidad' },
     baja: { titulo: 'Darse de baja', procesando: 'Procesando…', exito: 'Ya no recibirás nuestras actualizaciones.', error: 'El enlace no es válido o ya fue usado.' },
+    terminos: {
+      titulo: 'Términos y condiciones',
+      parrafos: [
+        'Kallpa Software es una empresa ficticia creada para la materia Ingeniería del Software II (UAGRM). Este sitio es un proyecto académico: no se ofrecen ni venden servicios reales.',
+        'Uso del sitio: puedes navegarlo, escribirnos, usar el chat y suscribirte al boletín sin costo. No está permitido enviar spam, intentar vulnerar la seguridad del sitio ni usar el chat para fines ajenos a consultas sobre la empresa.',
+        'Asistente virtual: las respuestas automáticas se generan con inteligencia artificial a partir de información de la empresa y pueden contener errores. No constituyen una oferta ni un compromiso; para cualquier acuerdo, una persona del equipo responde por escrito.',
+        'Boletín: al suscribirte aceptas recibir por correo nuestras novedades. Puedes darte de baja cuando quieras con el enlace de cada correo.',
+        'Propiedad intelectual: los textos, el logotipo y el código del sitio pertenecen a sus autores. Los proyectos mostrados son trabajos académicos reales y se citan con fines de portafolio.',
+        'Responsabilidad: el sitio se ofrece «tal como está», sin garantía de disponibilidad continua.',
+        'Cambios: estos términos pueden actualizarse; la versión vigente es la publicada en esta página (versión 1.0, 17 de noviembre de 2026).',
+        'Ley aplicable: Estado Plurinacional de Bolivia.',
+      ],
+    },
     privacidad: {
       titulo: 'Política de privacidad',
       parrafos: [
@@ -85,7 +98,7 @@ export const textos = {
       origen: { base_conocimiento: 'Respuesta verificada', modelo: 'Generado por IA', respaldo: 'Asistente' }, error: 'No se pudo enviar. Intenta de nuevo.',
       aviso: 'Respuestas automáticas con IA. Una persona puede revisar esta conversación.',
     },
-    pie: { lema: 'Software con fuerza, trazable y seguro.', enlaces: 'Enlaces', legal: 'Legal', privacidad: 'Privacidad', panel: 'Acceso del equipo', derechos: 'Proyecto académico. Empresa ficticia.' },
+    pie: { lema: 'Software con fuerza, trazable y seguro.', enlaces: 'Enlaces', legal: 'Legal', privacidad: 'Privacidad', terminos: 'Términos y condiciones', panel: 'Acceso del equipo', derechos: 'Proyecto académico. Empresa ficticia.' },
     noEncontrada: { titulo: 'Página no encontrada', texto: 'La página que buscas no existe o cambió de dirección.', volver: 'Volver al inicio' },
   },
 
@@ -155,8 +168,21 @@ export const textos = {
       ubicacion: 'Location', ubicacionTexto: 'Santa Cruz de la Sierra, Bolivia', horario: 'Hours', horarioTexto: 'Monday to Friday, 8:30 to 18:30 (Bolivia time)',
       minimo: 'Write at least 10 characters.',
     },
-    boletin: { titulo: 'Get our updates', texto: 'We email you about every new release and news. No spam.', placeholder: 'you@email.com', boton: 'Subscribe', exito: 'Done: check your email to confirm.', error: 'Could not subscribe. Check the email.' },
+    boletin: { titulo: 'Get our updates', texto: 'We email you about every new release and news. No spam.', placeholder: 'you@email.com', boton: 'Subscribe', exito: 'Done: check your email to confirm.', error: 'Could not subscribe. Check the email.', acepto: 'By subscribing you accept the', terminos: 'terms and conditions', y: 'and the', privacidad: 'privacy policy' },
     baja: { titulo: 'Unsubscribe', procesando: 'Processing…', exito: 'You will no longer receive our updates.', error: 'The link is not valid or was already used.' },
+    terminos: {
+      titulo: 'Terms and conditions',
+      parrafos: [
+        'Kallpa Software is a fictional company created for the Software Engineering II course (UAGRM). This site is an academic project: no real services are offered or sold.',
+        'Use of the site: you may browse it, write to us, use the chat and subscribe to the newsletter free of charge. Sending spam, trying to breach the site security or using the chat for purposes unrelated to the company is not allowed.',
+        'Virtual assistant: automatic answers are generated with artificial intelligence from company information and may contain errors. They are not an offer or a commitment; for any agreement, a person from our team replies in writing.',
+        'Newsletter: by subscribing you agree to receive our news by email. You can unsubscribe at any time with the link in every email.',
+        'Intellectual property: the texts, logo and code of the site belong to their authors. The projects shown are real academic works cited as a portfolio.',
+        'Liability: the site is provided «as is», with no guarantee of continuous availability.',
+        'Changes: these terms may be updated; the current version is the one published on this page (version 1.0, November 17, 2026).',
+        'Governing law: Plurinational State of Bolivia.',
+      ],
+    },
     privacidad: {
       titulo: 'Privacy policy',
       parrafos: [
@@ -174,7 +200,7 @@ export const textos = {
       origen: { base_conocimiento: 'Verified answer', modelo: 'AI generated', respaldo: 'Assistant' }, error: 'Could not send. Try again.',
       aviso: 'Automatic AI answers. A person may review this conversation.',
     },
-    pie: { lema: 'Strong, traceable and secure software.', enlaces: 'Links', legal: 'Legal', privacidad: 'Privacy', panel: 'Team access', derechos: 'Academic project. Fictional company.' },
+    pie: { lema: 'Strong, traceable and secure software.', enlaces: 'Links', legal: 'Legal', privacidad: 'Privacy', terminos: 'Terms and conditions', panel: 'Team access', derechos: 'Academic project. Fictional company.' },
     noEncontrada: { titulo: 'Page not found', texto: 'The page you are looking for does not exist or has moved.', volver: 'Back to home' },
   },
 };

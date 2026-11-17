@@ -17,6 +17,19 @@ export function Privacidad() {
   );
 }
 
+export function Terminos() {
+  const { t } = useIdioma();
+  useTitulo(t.terminos.titulo);
+  return (
+    <>
+      <EncabezadoPagina titulo={t.terminos.titulo} />
+      <Contenedor className="max-w-3xl space-y-4 py-12 text-slate-700">
+        {t.terminos.parrafos.map((p) => <p key={p}>{p}</p>)}
+      </Contenedor>
+    </>
+  );
+}
+
 export function Baja() {
   const { token } = useParams();
   const { t } = useIdioma();

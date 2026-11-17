@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../api';
 import { useIdioma } from '../i18n/Idioma';
 
@@ -34,6 +35,10 @@ export default function Boletin({ oscuro = false }) {
           {t.boletin.boton}
         </button>
       </form>
+      <p className={`mt-2 text-xs ${oscuro ? 'text-slate-400' : 'text-slate-500'}`}>
+        {t.boletin.acepto} <Link to="/terminos" className="underline">{t.boletin.terminos}</Link> {t.boletin.y}{' '}
+        <Link to="/privacidad" className="underline">{t.boletin.privacidad}</Link>.
+      </p>
       <p role="status" className={`mt-2 text-sm ${estado === 'error' ? 'text-red-400' : oscuro ? 'text-kallpa-300' : 'text-kallpa-700'}`}>
         {estado === 'ok' && t.boletin.exito}
         {estado === 'error' && t.boletin.error}

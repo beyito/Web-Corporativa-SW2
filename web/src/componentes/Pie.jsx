@@ -25,6 +25,7 @@ export default function Pie() {
         <nav aria-label={t.pie.legal}>
           <h2 className="text-sm font-semibold text-white">{t.pie.legal}</h2>
           <ul className="mt-3 space-y-2">
+            <li><Link className={enlace} to="/terminos">{t.pie.terminos}</Link></li>
             <li><Link className={enlace} to="/privacidad">{t.pie.privacidad}</Link></li>
             <li><Link className={enlace} to="/panel">{t.pie.panel}</Link></li>
           </ul>

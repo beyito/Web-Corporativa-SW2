@@ -9,7 +9,7 @@ import Proyectos from './paginas/Proyectos';
 import Novedades, { DetalleNovedad } from './paginas/Novedades';
 import Nosotros from './paginas/Nosotros';
 import Contacto from './paginas/Contacto';
-import { Baja, NoEncontrada, Privacidad } from './paginas/Varias';
+import { Baja, NoEncontrada, Privacidad, Terminos } from './paginas/Varias';
 
 // El panel del equipo se descarga solo cuando se usa
 const Panel = lazy(() => import('./panel/Panel'));
@@ -39,6 +39,7 @@ export default function App() {
         <Route path="nosotros" element={<Nosotros />} />
         <Route path="contacto" element={<Contacto />} />
         <Route path="privacidad" element={<Privacidad />} />
+        <Route path="terminos" element={<Terminos />} />
         <Route path="baja/:token" element={<Baja />} />
         <Route path="*" element={<NoEncontrada />} />
       </Route>
