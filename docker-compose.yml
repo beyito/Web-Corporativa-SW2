@@ -1,0 +1,35 @@
+# Sitio corporativo de Kallpa Software.
+# `name` propio: NO cambiarlo. Sin él, Compose confundiría este proyecto con el de la plataforma de becas.
+name: kallpa-sitio
+
+services:
+  api:
+    build: ./api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: sqlite:////data/sitio.db
+    volumes: [datos:/data]
+    networks: [default, ia]
+
+  web:
+    build: ./web
+    restart: unless-stopped
+    depends_on: [api]
+    networks:
+      default:
+      perimetro:
+        aliases: [kallpa-web]  # el Caddy de la VM atiende el dominio y reenvía aquí
+
+volumes:
+  datos:
+
+networks:
+  # Red del Caddy compartido de la VM (HTTPS con Let's Encrypt)
+  perimetro:
+    name: becas-perimetro
+    external: true
+  # Red donde corre Ollama (instancia IS); el agente del chat lo usa para lo que no está en su base
+  ia:
+    name: becas-dubss-is_default
+    external: true
