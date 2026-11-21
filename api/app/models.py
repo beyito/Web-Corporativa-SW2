@@ -92,3 +92,19 @@ class ChatMensaje(Base):
     origen: Mapped[str | None] = mapped_column(String(30), nullable=True)  # base_conocimiento | modelo | respaldo
     creado: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=ahora)
     sesion: Mapped[ChatSesion] = relationship(back_populates="mensajes")
+
+
+class WhatsappContacto(Base):
+    """Número de WhatsApp de un cliente y la conversación del chat que le corresponde (la atiende el mismo agente)."""
+    __tablename__ = "whatsapp_contactos"
+    numero: Mapped[str] = mapped_column(String(20), primary_key=True)   # wa_id, solo dígitos con código de país
+    sesion_id: Mapped[str] = mapped_column(ForeignKey("chat_sesiones.id"), index=True)
+    perfil: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    actualizado: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=ahora)
+
+
+class WhatsappMensajeRecibido(Base):
+    """Id de cada mensaje ya procesado: Meta puede reenviar la misma notificación y no se responde dos veces."""
+    __tablename__ = "whatsapp_recibidos"
+    id: Mapped[str] = mapped_column(String(128), primary_key=True)
+    creado: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=ahora)

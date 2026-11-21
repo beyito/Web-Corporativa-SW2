@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.db import Base, SessionLocal, engine
-from app.rutas import admin, chat, publico
+from app.rutas import admin, chat, publico, whatsapp
 from app.semilla import sembrar
 
 logging.basicConfig(level=logging.INFO)
@@ -25,7 +25,7 @@ app = FastAPI(title="Kallpa Software · API del sitio", version="1.0.0", lifespa
 app.add_middleware(CORSMiddleware, allow_origins=[o.strip() for o in settings.cors_origenes.split(",") if o.strip()],
                    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"], allow_headers=["*"])
 
-for r in (publico.router, chat.router, admin.router, admin.protegido):
+for r in (publico.router, chat.router, admin.router, admin.protegido, whatsapp.router):
     app.include_router(r)
 
 

@@ -7,6 +7,7 @@ from app import correo
 from app.config import settings
 from app.db import SessionLocal, get_db
 from app.models import ChatMensaje, ChatSesion, MensajeContacto, Novedad, Suscriptor, Usuario, ahora
+from app.rutas.whatsapp import enviar_respuesta_del_equipo
 from app.schemas import ChatMensajeIn, ChatMensajeOut, LoginIn, NovedadAdminOut, NovedadIn
 from app.seguridad import LimitePeticiones, crear_token, usuario_actual, verificar_password
 
@@ -79,7 +80,8 @@ def chat(sid: str, desde: int = Query(0, ge=0), db: Session = Depends(get_db)):
 
 
 @protegido.post("/chats/{sid}/responder", response_model=ChatMensajeOut)
-def responder_chat(sid: str, datos: ChatMensajeIn, usuario: Usuario = Depends(usuario_actual), db: Session = Depends(get_db)):
+def responder_chat(sid: str, datos: ChatMensajeIn, tareas: BackgroundTasks, usuario: Usuario = Depends(usuario_actual),
+                   db: Session = Depends(get_db)):
     s = db.get(ChatSesion, sid)
     if not s:
         raise HTTPException(404, "Conversación no encontrada")
@@ -89,11 +91,12 @@ def responder_chat(sid: str, datos: ChatMensajeIn, usuario: Usuario = Depends(us
     m = ChatMensaje(sesion_id=s.id, autor="EQUIPO", texto=datos.texto.strip(), origen=usuario.nombre)
     db.add(m)
     db.commit()
+    tareas.add_task(enviar_respuesta_del_equipo, s.id, f"{usuario.nombre} (Kallpa): {m.texto}")  # si vino por WhatsApp
     return m
 
 
 @protegido.post("/chats/{sid}/cerrar")
-def cerrar_chat(sid: str, db: Session = Depends(get_db)):
+def cerrar_chat(sid: str, tareas: BackgroundTasks, db: Session = Depends(get_db)):
     s = db.get(ChatSesion, sid)
     if not s:
         raise HTTPException(404, "Conversación no encontrada")
@@ -103,6 +106,7 @@ def cerrar_chat(sid: str, db: Session = Depends(get_db)):
         db.add(ChatMensaje(sesion_id=s.id, autor="SISTEMA", texto=texto))
         s.estado, s.actualizado = "CERRADA", ahora()
         db.commit()
+        tareas.add_task(enviar_respuesta_del_equipo, s.id, texto)
     return {"ok": True}
 
 

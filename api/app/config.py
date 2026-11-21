@@ -29,6 +29,18 @@ class Settings(BaseSettings):
     smtp_remitente: str = ""
     correo_equipo: str = ""  # destino de los avisos de contacto y chat
 
+    # WhatsApp Cloud API (Meta). Sin token ni número = el canal de WhatsApp queda apagado.
+    whatsapp_token: str = ""
+    whatsapp_phone_number_id: str = ""
+    whatsapp_admin_phone: str = ""      # a quién avisar cuando un cliente pide hablar con una persona
+    whatsapp_verify_token: str = ""     # palabra que Meta envía al registrar el webhook
+    whatsapp_api_url: str = "https://graph.facebook.com/v21.0"
+    whatsapp_app_secret: str = ""       # firma X-Hub-Signature-256 de cada notificación
+
+    @property
+    def whatsapp_activo(self) -> bool:
+        return bool(self.whatsapp_token and self.whatsapp_phone_number_id)
+
     sitio_url: str = "http://localhost:5173"
     cors_origenes: str = "http://localhost:5173"
 

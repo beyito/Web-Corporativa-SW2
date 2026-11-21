@@ -3,6 +3,7 @@ import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import Cabecera from './componentes/Cabecera';
 import Pie from './componentes/Pie';
 import Chat from './componentes/Chat';
+import WhatsappBoton from './componentes/WhatsappBoton';
 import Inicio from './paginas/Inicio';
 import Servicios from './paginas/Servicios';
 import Proyectos from './paginas/Proyectos';
@@ -22,6 +23,7 @@ function Sitio() {
       <Cabecera />
       <main id="contenido" className="flex-1" tabIndex={-1}><Outlet /></main>
       <Pie />
+      <WhatsappBoton />
       <Chat />
     </div>
   );
