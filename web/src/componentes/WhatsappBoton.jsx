@@ -13,7 +13,7 @@ export default function WhatsappBoton() {
   const [numero, setNumero] = useState(null);
 
   useEffect(() => {
-    api('/api/whatsapp/contacto').then((r) => setNumero(r.disponible ? r.numero : null)).catch(() => setNumero(null));
+    api('/whatsapp/contacto').then((r) => setNumero(r.disponible ? r.numero : null)).catch(() => setNumero(null));
   }, []);
 
   if (!numero) return null;
