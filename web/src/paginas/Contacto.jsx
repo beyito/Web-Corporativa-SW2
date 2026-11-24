@@ -5,6 +5,7 @@ import { api, ErrorApi } from '../api';
 import { useIdioma, useTitulo } from '../i18n/Idioma';
 import { Contenedor, EncabezadoPagina } from '../componentes/Comunes';
 import { abrirChat } from '../componentes/Chat';
+import { AvisoConsentimiento, useConsentimiento } from '../componentes/Consentimiento';
 import Boletin from '../componentes/Boletin';
 
 const VACIO = { nombre: '', email: '', empresa: '', asunto: 'COTIZACION', mensaje: '', sitio_web: '' };
@@ -12,6 +13,7 @@ const campo = 'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm 
 
 export default function Contacto() {
   const { t, idioma } = useIdioma();
+  const { aceptado } = useConsentimiento();
   const c = t.contacto;
   useTitulo(c.titulo);
   const [datos, setDatos] = useState(VACIO);
@@ -35,7 +37,9 @@ export default function Contacto() {
     <>
       <EncabezadoPagina titulo={c.titulo} sub={c.sub} />
       <Contenedor className="grid gap-10 py-16 lg:grid-cols-3">
-        <form onSubmit={enviar} className="space-y-4 rounded-2xl border border-slate-200 p-6 sm:p-8 lg:col-span-2" noValidate={false}>
+        <form onSubmit={enviar} className="rounded-2xl border border-slate-200 p-6 sm:p-8 lg:col-span-2" noValidate={false}>
+          {!aceptado && <div className="mb-4 rounded-lg bg-sol-400/20 px-4 pb-3 pt-1"><AvisoConsentimiento /></div>}
+          <fieldset disabled={!aceptado} className="min-w-0 space-y-4 disabled:opacity-60">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="nombre" className="text-sm font-medium text-slate-700">{c.nombre}</label>
@@ -77,6 +81,7 @@ export default function Contacto() {
             {estado === 'error' && c.error}
             {estado === 'limite' && c.limite}
           </p>
+          </fieldset>
         </form>
 
         <aside className="space-y-6">

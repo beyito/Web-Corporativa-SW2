@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Bot, MessageCircle, Send, UserRound, X } from 'lucide-react';
 import { api } from '../api';
 import { useIdioma } from '../i18n/Idioma';
+import { useConsentimiento } from './Consentimiento';
 
 const CLAVE = 'kallpa-chat';
 const leerSesion = () => { try { return JSON.parse(localStorage.getItem(CLAVE)); } catch { return null; } };
@@ -11,6 +12,7 @@ export const abrirChat = () => window.dispatchEvent(new Event('kallpa-abrir-chat
 
 export default function Chat() {
   const { t, idioma } = useIdioma();
+  const { decision, aceptado, revisar } = useConsentimiento();
   const [abierto, setAbierto] = useState(false);
   const [sesion, setSesion] = useState(leerSesion);
   const [mensajes, setMensajes] = useState([]);
@@ -45,10 +47,13 @@ export default function Chat() {
   }, [idioma]);
 
   useEffect(() => {
-    const abrir = () => setAbierto(true);
+    const abrir = () => (aceptado ? setAbierto(true) : revisar());
     window.addEventListener('kallpa-abrir-chat', abrir);
     return () => window.removeEventListener('kallpa-abrir-chat', abrir);
-  }, []);
+  }, [aceptado, revisar]);
+
+  // Si el visitante retira su aceptación, el chat se cierra
+  useEffect(() => { if (!aceptado) setAbierto(false); }, [aceptado]);
 
   // Al abrir: retoma la conversación guardada o empieza una nueva
   useEffect(() => {
@@ -104,8 +109,8 @@ export default function Chat() {
 
   return (
     <>
-      {!abierto && (
-        <button type="button" onClick={() => setAbierto(true)} aria-label={t.chat.abrir}
+      {!abierto && decision !== null && (
+        <button type="button" onClick={abrirChat} aria-label={t.chat.abrir}
           className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-kallpa-600 text-white shadow-lg shadow-kallpa-900/30 hover:bg-kallpa-700 focus:outline-none focus:ring-4 focus:ring-kallpa-500/40">
           <MessageCircle className="h-7 w-7" />
         </button>

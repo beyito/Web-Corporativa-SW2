@@ -4,6 +4,7 @@ import Cabecera from './componentes/Cabecera';
 import Pie from './componentes/Pie';
 import Chat from './componentes/Chat';
 import WhatsappBoton from './componentes/WhatsappBoton';
+import Consentimiento, { ProveedorConsentimiento } from './componentes/Consentimiento';
 import Inicio from './paginas/Inicio';
 import Servicios from './paginas/Servicios';
 import Proyectos from './paginas/Proyectos';
@@ -19,13 +20,16 @@ function Sitio() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return (
-    <div className="flex min-h-dvh flex-col">
-      <Cabecera />
-      <main id="contenido" className="flex-1" tabIndex={-1}><Outlet /></main>
-      <Pie />
-      <WhatsappBoton />
-      <Chat />
-    </div>
+    <ProveedorConsentimiento>
+      <div className="flex min-h-dvh flex-col">
+        <Cabecera />
+        <main id="contenido" className="flex-1" tabIndex={-1}><Outlet /></main>
+        <Pie />
+        <WhatsappBoton />
+        <Chat />
+        <Consentimiento />
+      </div>
+    </ProveedorConsentimiento>
   );
 }
 

@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import Boletin from './Boletin';
+import { useConsentimiento } from './Consentimiento';
 import { useIdioma } from '../i18n/Idioma';
 
 export default function Pie() {
   const { t } = useIdioma();
+  const { revisar } = useConsentimiento();
   const enlace = 'text-sm text-slate-300 hover:text-white';
   return (
     <footer className="bg-tinta-950 text-slate-300">
@@ -27,6 +29,7 @@ export default function Pie() {
           <ul className="mt-3 space-y-2">
             <li><Link className={enlace} to="/terminos">{t.pie.terminos}</Link></li>
             <li><Link className={enlace} to="/privacidad">{t.pie.privacidad}</Link></li>
+            <li><button type="button" onClick={revisar} className={`text-left ${enlace}`}>{t.consentimiento.preferencias}</button></li>
             <li><Link className={enlace} to="/panel">{t.pie.panel}</Link></li>
           </ul>
         </nav>
